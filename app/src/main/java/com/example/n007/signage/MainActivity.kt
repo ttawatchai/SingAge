@@ -1,50 +1,46 @@
 package com.example.n007.signage
 
-import android.support.v7.app.AppCompatActivity
+import android.annotation.SuppressLint
 import android.os.Bundle
-import com.google.gson.GsonBuilder
-import com.example.n007.signage.model.Info
+import android.os.Handler
+import android.support.v7.app.AppCompatActivity
+import android.view.WindowManager
 import kotlinx.android.synthetic.main.activity_main.*
-import okhttp3.*
-import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
-    val client = OkHttpClient()
-    var content: Info.content? = null
-    var sdf = SimpleDateFormat("ddMMyyyy")
-    val currentTime = Calendar.getInstance().time
-    var currentDate = sdf.format(Date())
+    private lateinit var mHandler: Handler
+    private lateinit var mRunnable: Runnable
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        mHandler = Handler()
+        setTime()
     }
 
-    private fun run(url: String) {
-        val request = Request.Builder()
-                .url(url)
-                .build()
-        client.newCall(request).enqueue(object : Callback {
-            override fun onResponse(call: Call?, response: Response?) {
-                val body = response?.body()?.string()
-                val gson = GsonBuilder().create()
-                content = gson.fromJson(body, Info.content::class.java)
-                initView()
-            }
-
-            override fun onFailure(call: Call?, e: IOException?) {
-                println("Failed to execute request")
-            }
-        })
+    @SuppressLint("SetTextI18n")
+    private fun setTime() {
+        mRunnable = Runnable {
+            val currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+            val currentMin = Calendar.getInstance().get(Calendar.MINUTE)
+            val currentSec = Calendar.getInstance().get(Calendar.SECOND)
+            tv_time.text = currentHour.toString()+":"+currentMin.toString()+":"+currentSec.toString()
+            mHandler.postDelayed(
+                    mRunnable, // Runnable
+                    1000 // Delay in milliseconds
+            )
+        }
+        mHandler.postDelayed(
+                mRunnable, // Runnable
+                1000 // Delay in milliseconds
+        )
     }
 
-    private fun initView() {
-        tv_date.text = currentDate
-        tv_time.text = currentTime.toString()
-    }
 
 }
