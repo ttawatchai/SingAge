@@ -7,8 +7,9 @@ import com.google.gson.annotations.SerializedName
  */
 class Info {
     data class content(
-            @SerializedName("size") var _size: String?,
-            @SerializedName("photo") var _photo: photos)
+            @SerializedName("name") var _name: String?,
+            @SerializedName("type") var _type: String?,
+            @SerializedName("time") var _time: String?)
 
     data class photos(
 

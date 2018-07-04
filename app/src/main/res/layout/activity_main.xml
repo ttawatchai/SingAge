@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/bg_view"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bg_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.n007.signage.MainActivity">
+    tools:context="com.example.n007.signage.MainActivity"
+    android:keepScreenOn="true">
 
     <TextView
         android:id="@+id/tv_time"
@@ -15,12 +16,21 @@
         app:layout_constraintHorizontal_bias="0.948"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        android:text="@string/app_name"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.032" />
+        app:layout_constraintVertical_bias="0.032"
+        />
 
+    <ImageView
+        android:id="@+id/show_img"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
 
-
-
-
+    <VideoView
+        android:id="@+id/show_vdo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
 
 </android.support.constraint.ConstraintLayout>
